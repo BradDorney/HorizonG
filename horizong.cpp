@@ -1,4 +1,4 @@
-/* 
+/*  
  * HorizonG
  * Author: Brad Dorney
  *
@@ -8,7 +8,6 @@
  * File Description:
  *   Application for analyzing BLAST search results for horizontal gene transfer
  *   candidates.
- *
  */
 
 #include <ncbi_pch.hpp>
@@ -182,10 +181,10 @@ void TokenizeStrToInt(const string &in, const string &delimiters, containerT &ou
 
 
 /////////////////////////////////////////////////////////////////////////////
-//  CAlienG2::
+//  CHorizonG::
 
 
-class CAlienG2 : public CNcbiApplication {
+class CHorizonG : public CNcbiApplication {
 public:
   typedef unordered_set<int> TGroup;
   typedef tuple<CRef<CSeq_align>, CRef<CSeq_align>, /* Group 1, group 2 */
@@ -252,105 +251,105 @@ private:
 
 
 // Define config parameters
-NCBI_PARAM_DECL(string, AlienG2, task);
-NCBI_PARAM_DEF( string, AlienG2, task, "report");
-NCBI_PARAM_DECL(int,    AlienG2, num_threads);
-NCBI_PARAM_DEF( int,    AlienG2, num_threads, (int)CThreadable::kMinNumThreads);
-NCBI_PARAM_DECL(string, AlienG2, database);
-NCBI_PARAM_DEF( string, AlienG2, database, "nr");
-NCBI_PARAM_DECL(string, AlienG2, taxdump);
-NCBI_PARAM_DEF( string, AlienG2, taxdump, "");
-NCBI_PARAM_DECL(string, AlienG2, in);
-NCBI_PARAM_DEF( string, AlienG2, in, "stdin");
-NCBI_PARAM_DECL(string, AlienG2, out);
-NCBI_PARAM_DEF( string, AlienG2, out, "stdout");
-typedef NCBI_PARAM_TYPE(AlienG2, task)        TParam_Task;
-typedef NCBI_PARAM_TYPE(AlienG2, num_threads) TParam_NumThreads;
-typedef NCBI_PARAM_TYPE(AlienG2, database)    TParam_Database;
-typedef NCBI_PARAM_TYPE(AlienG2, taxdump)     TParam_TaxDump;
-typedef NCBI_PARAM_TYPE(AlienG2, in)          TParam_In;
-typedef NCBI_PARAM_TYPE(AlienG2, out)         TParam_Out;
+NCBI_PARAM_DECL(string, HorizonG, task);
+NCBI_PARAM_DEF( string, HorizonG, task, "report");
+NCBI_PARAM_DECL(int,    HorizonG, num_threads);
+NCBI_PARAM_DEF( int,    HorizonG, num_threads, (int)CThreadable::kMinNumThreads);
+NCBI_PARAM_DECL(string, HorizonG, database);
+NCBI_PARAM_DEF( string, HorizonG, database, "nr");
+NCBI_PARAM_DECL(string, HorizonG, taxdump);
+NCBI_PARAM_DEF( string, HorizonG, taxdump, "");
+NCBI_PARAM_DECL(string, HorizonG, in);
+NCBI_PARAM_DEF( string, HorizonG, in, "stdin");
+NCBI_PARAM_DECL(string, HorizonG, out);
+NCBI_PARAM_DEF( string, HorizonG, out, "stdout");
+typedef NCBI_PARAM_TYPE(HorizonG, task)        TParam_Task;
+typedef NCBI_PARAM_TYPE(HorizonG, num_threads) TParam_NumThreads;
+typedef NCBI_PARAM_TYPE(HorizonG, database)    TParam_Database;
+typedef NCBI_PARAM_TYPE(HorizonG, taxdump)     TParam_TaxDump;
+typedef NCBI_PARAM_TYPE(HorizonG, in)          TParam_In;
+typedef NCBI_PARAM_TYPE(HorizonG, out)         TParam_Out;
 
-NCBI_PARAM_DECL(int,    AlienG2, max_target_seqs);
-NCBI_PARAM_DEF( int,    AlienG2, max_target_seqs, 0);
-NCBI_PARAM_DECL(int,    AlienG2, penalty);
-NCBI_PARAM_DEF( int,    AlienG2, penalty, 0);
-NCBI_PARAM_DECL(int,    AlienG2, reward);
-NCBI_PARAM_DEF( int,    AlienG2, reward, 0);
-NCBI_PARAM_DECL(string, AlienG2, matrix);
-NCBI_PARAM_DEF( string, AlienG2, matrix, "");
-NCBI_PARAM_DECL(string, AlienG2, evalue);
-NCBI_PARAM_DEF( string, AlienG2, evalue, "0");
-NCBI_PARAM_DECL(string, AlienG2, bitscore);
-NCBI_PARAM_DEF( string, AlienG2, bitscore, "0");
-NCBI_PARAM_DECL(string, AlienG2, coverage);
-NCBI_PARAM_DEF( string, AlienG2, coverage, "0");
-typedef NCBI_PARAM_TYPE(AlienG2, max_target_seqs) TParam_MaxTargetSeqs;
-typedef NCBI_PARAM_TYPE(AlienG2, penalty)         TParam_Penalty;
-typedef NCBI_PARAM_TYPE(AlienG2, reward)          TParam_Reward;
-typedef NCBI_PARAM_TYPE(AlienG2, matrix)          TParam_Matrix;
-typedef NCBI_PARAM_TYPE(AlienG2, evalue)          TParam_EValue;
-typedef NCBI_PARAM_TYPE(AlienG2, bitscore)        TParam_Bitscore;
-typedef NCBI_PARAM_TYPE(AlienG2, coverage)        TParam_Coverage;
+NCBI_PARAM_DECL(int,    HorizonG, max_target_seqs);
+NCBI_PARAM_DEF( int,    HorizonG, max_target_seqs, 0);
+NCBI_PARAM_DECL(int,    HorizonG, penalty);
+NCBI_PARAM_DEF( int,    HorizonG, penalty, 0);
+NCBI_PARAM_DECL(int,    HorizonG, reward);
+NCBI_PARAM_DEF( int,    HorizonG, reward, 0);
+NCBI_PARAM_DECL(string, HorizonG, matrix);
+NCBI_PARAM_DEF( string, HorizonG, matrix, "");
+NCBI_PARAM_DECL(string, HorizonG, evalue);
+NCBI_PARAM_DEF( string, HorizonG, evalue, "0");
+NCBI_PARAM_DECL(string, HorizonG, bitscore);
+NCBI_PARAM_DEF( string, HorizonG, bitscore, "0");
+NCBI_PARAM_DECL(string, HorizonG, coverage);
+NCBI_PARAM_DEF( string, HorizonG, coverage, "0");
+typedef NCBI_PARAM_TYPE(HorizonG, max_target_seqs) TParam_MaxTargetSeqs;
+typedef NCBI_PARAM_TYPE(HorizonG, penalty)         TParam_Penalty;
+typedef NCBI_PARAM_TYPE(HorizonG, reward)          TParam_Reward;
+typedef NCBI_PARAM_TYPE(HorizonG, matrix)          TParam_Matrix;
+typedef NCBI_PARAM_TYPE(HorizonG, evalue)          TParam_EValue;
+typedef NCBI_PARAM_TYPE(HorizonG, bitscore)        TParam_Bitscore;
+typedef NCBI_PARAM_TYPE(HorizonG, coverage)        TParam_Coverage;
 
-NCBI_PARAM_DECL(string, AlienG2, filter);
-NCBI_PARAM_DEF( string, AlienG2, filter, "");
-NCBI_PARAM_DECL(string, AlienG2, filter_ids);
-NCBI_PARAM_DEF( string, AlienG2, filter_ids, "");
-NCBI_PARAM_DECL(string, AlienG2, filter_accs);
-NCBI_PARAM_DEF( string, AlienG2, filter_accs, "");
-NCBI_PARAM_DECL(string, AlienG2, filter_gis);
-NCBI_PARAM_DEF( string, AlienG2, filter_gis, "");
-NCBI_PARAM_DECL(string, AlienG2, group1);
-NCBI_PARAM_DEF( string, AlienG2, group1, "");
-NCBI_PARAM_DECL(string, AlienG2, group1_ids);
-NCBI_PARAM_DEF( string, AlienG2, group1_ids, "");
-NCBI_PARAM_DECL(string, AlienG2, group2);
-NCBI_PARAM_DEF( string, AlienG2, group2, "");
-NCBI_PARAM_DECL(string, AlienG2, group2_ids);
-NCBI_PARAM_DEF( string, AlienG2, group2_ids, "");
-typedef NCBI_PARAM_TYPE(AlienG2, filter)      TParam_FilterNames;
-typedef NCBI_PARAM_TYPE(AlienG2, filter_ids)  TParam_FilterIDs;
-typedef NCBI_PARAM_TYPE(AlienG2, filter_accs) TParam_FilterAccs;
-typedef NCBI_PARAM_TYPE(AlienG2, filter_gis)  TParam_FilterGIs;
-typedef NCBI_PARAM_TYPE(AlienG2, group1)      TParam_Group1Names;
-typedef NCBI_PARAM_TYPE(AlienG2, group1_ids)  TParam_Group1IDs;
-typedef NCBI_PARAM_TYPE(AlienG2, group2)      TParam_Group2Names;
-typedef NCBI_PARAM_TYPE(AlienG2, group2_ids)  TParam_Group2IDs;
+NCBI_PARAM_DECL(string, HorizonG, filter);
+NCBI_PARAM_DEF( string, HorizonG, filter, "");
+NCBI_PARAM_DECL(string, HorizonG, filter_ids);
+NCBI_PARAM_DEF( string, HorizonG, filter_ids, "");
+NCBI_PARAM_DECL(string, HorizonG, filter_accs);
+NCBI_PARAM_DEF( string, HorizonG, filter_accs, "");
+NCBI_PARAM_DECL(string, HorizonG, filter_gis);
+NCBI_PARAM_DEF( string, HorizonG, filter_gis, "");
+NCBI_PARAM_DECL(string, HorizonG, group1);
+NCBI_PARAM_DEF( string, HorizonG, group1, "");
+NCBI_PARAM_DECL(string, HorizonG, group1_ids);
+NCBI_PARAM_DEF( string, HorizonG, group1_ids, "");
+NCBI_PARAM_DECL(string, HorizonG, group2);
+NCBI_PARAM_DEF( string, HorizonG, group2, "");
+NCBI_PARAM_DECL(string, HorizonG, group2_ids);
+NCBI_PARAM_DEF( string, HorizonG, group2_ids, "");
+typedef NCBI_PARAM_TYPE(HorizonG, filter)      TParam_FilterNames;
+typedef NCBI_PARAM_TYPE(HorizonG, filter_ids)  TParam_FilterIDs;
+typedef NCBI_PARAM_TYPE(HorizonG, filter_accs) TParam_FilterAccs;
+typedef NCBI_PARAM_TYPE(HorizonG, filter_gis)  TParam_FilterGIs;
+typedef NCBI_PARAM_TYPE(HorizonG, group1)      TParam_Group1Names;
+typedef NCBI_PARAM_TYPE(HorizonG, group1_ids)  TParam_Group1IDs;
+typedef NCBI_PARAM_TYPE(HorizonG, group2)      TParam_Group2Names;
+typedef NCBI_PARAM_TYPE(HorizonG, group2_ids)  TParam_Group2IDs;
 
-NCBI_PARAM_DECL(string, AlienG2, alien_min);
-NCBI_PARAM_DEF( string, AlienG2, alien_min, "0");
-NCBI_PARAM_DECL(string, AlienG2, alien_max);
-NCBI_PARAM_DEF( string, AlienG2, alien_max, "0");
-NCBI_PARAM_DECL(string, AlienG2, hgt_min);
-NCBI_PARAM_DEF( string, AlienG2, hgt_min, "0");
-NCBI_PARAM_DECL(string, AlienG2, hgt_max);
-NCBI_PARAM_DEF( string, AlienG2, hgt_max, "0");
-NCBI_PARAM_DECL(string, AlienG2, ratio_min);
-NCBI_PARAM_DEF( string, AlienG2, ratio_min, "0");
-NCBI_PARAM_DECL(string, AlienG2, ratio_max);
-NCBI_PARAM_DEF( string, AlienG2, ratio_max, "0");
-NCBI_PARAM_DECL(string, AlienG2, ancestor_rank);
-NCBI_PARAM_DEF( string, AlienG2, ancestor_rank, "no rank");
-NCBI_PARAM_DECL(string, AlienG2, search_order);
-NCBI_PARAM_DEF( string, AlienG2, search_order, "any");
-typedef NCBI_PARAM_TYPE(AlienG2, alien_min)     TParam_AlienIndexMin;
-typedef NCBI_PARAM_TYPE(AlienG2, alien_max)     TParam_AlienIndexMax;
-typedef NCBI_PARAM_TYPE(AlienG2, hgt_min)       TParam_HGTIndexMin;
-typedef NCBI_PARAM_TYPE(AlienG2, hgt_max)       TParam_HGTIndexMax;
-typedef NCBI_PARAM_TYPE(AlienG2, ratio_min)     TParam_ScoreRatioMin;
-typedef NCBI_PARAM_TYPE(AlienG2, ratio_max)     TParam_ScoreRatioMax;
-typedef NCBI_PARAM_TYPE(AlienG2, ancestor_rank) TParam_AncestorRank;
-typedef NCBI_PARAM_TYPE(AlienG2, search_order)  TParam_SearchOrder;
+NCBI_PARAM_DECL(string, HorizonG, alien_min);
+NCBI_PARAM_DEF( string, HorizonG, alien_min, "0");
+NCBI_PARAM_DECL(string, HorizonG, alien_max);
+NCBI_PARAM_DEF( string, HorizonG, alien_max, "0");
+NCBI_PARAM_DECL(string, HorizonG, hgt_min);
+NCBI_PARAM_DEF( string, HorizonG, hgt_min, "0");
+NCBI_PARAM_DECL(string, HorizonG, hgt_max);
+NCBI_PARAM_DEF( string, HorizonG, hgt_max, "0");
+NCBI_PARAM_DECL(string, HorizonG, ratio_min);
+NCBI_PARAM_DEF( string, HorizonG, ratio_min, "0");
+NCBI_PARAM_DECL(string, HorizonG, ratio_max);
+NCBI_PARAM_DEF( string, HorizonG, ratio_max, "0");
+NCBI_PARAM_DECL(string, HorizonG, ancestor_rank);
+NCBI_PARAM_DEF( string, HorizonG, ancestor_rank, "no rank");
+NCBI_PARAM_DECL(string, HorizonG, search_order);
+NCBI_PARAM_DEF( string, HorizonG, search_order, "any");
+typedef NCBI_PARAM_TYPE(HorizonG, alien_min)     TParam_AlienIndexMin;
+typedef NCBI_PARAM_TYPE(HorizonG, alien_max)     TParam_AlienIndexMax;
+typedef NCBI_PARAM_TYPE(HorizonG, hgt_min)       TParam_HGTIndexMin;
+typedef NCBI_PARAM_TYPE(HorizonG, hgt_max)       TParam_HGTIndexMax;
+typedef NCBI_PARAM_TYPE(HorizonG, ratio_min)     TParam_ScoreRatioMin;
+typedef NCBI_PARAM_TYPE(HorizonG, ratio_max)     TParam_ScoreRatioMax;
+typedef NCBI_PARAM_TYPE(HorizonG, ancestor_rank) TParam_AncestorRank;
+typedef NCBI_PARAM_TYPE(HorizonG, search_order)  TParam_SearchOrder;
 
 
 /// Initialize command line arguments. Default values taken from config parameters.
-void CAlienG2::Init() {
+void CHorizonG::Init() {
   auto_ptr<CArgDescriptions> argDesc(new CArgDescriptions);
 
   // Specify USAGE context
   argDesc->SetUsageContext(GetArguments().GetProgramBasename(),
-    "AlienG2 HGT Analyzer");
+    "HorizonG HGT Analyzer");
 
   // ** TODO Need to test all programs to ensure they work
   TParam_Task pTask;
@@ -530,7 +529,7 @@ void CAlienG2::Init() {
 
 
 /// Parse NCBI taxonomy dump files to get taxonomic information.
-bool CAlienG2::ProcessTaxonomyDump() {
+bool CHorizonG::ProcessTaxonomyDump() {
   const CArgs &args = GetArgs();
 
   string taxDumpDir = args["taxdump"].AsString();
@@ -692,7 +691,7 @@ bool CAlienG2::ProcessTaxonomyDump() {
 
 
 /// Setup search filters and HGT groups based upon arguments/parameters.
-void CAlienG2::SetupFiltersAndGroups() {
+void CHorizonG::SetupFiltersAndGroups() {
   const CArgs &args = GetArgs();
 
   vector<string> names;
@@ -768,7 +767,7 @@ void CAlienG2::SetupFiltersAndGroups() {
 /// Package a scope and Seq-loc into a SSeqLoc from a Bioseq
 /// @param bioseq Bioseq to inspect [in]
 /// @param scope Scope object to add the sequence data to [in|out]
-SSeqLoc CAlienG2::x_QueryBioseqToSSeqLoc(const CBioseq& bioseq, CRef<CScope> scope) {
+SSeqLoc CHorizonG::x_QueryBioseqToSSeqLoc(const CBioseq& bioseq, CRef<CScope> scope) {
   static bool firstTime = true;
   _ASSERT(scope);
 
@@ -789,7 +788,7 @@ SSeqLoc CAlienG2::x_QueryBioseqToSSeqLoc(const CBioseq& bioseq, CRef<CScope> sco
 /// Build the query from a PSSM
 /// @param pssm PSSM to inspect [in]
 CRef<CBlastSearchQuery>
-CAlienG2::x_BuildQueryFromPssm(const CPssmWithParameters &pssm) {
+CHorizonG::x_BuildQueryFromPssm(const CPssmWithParameters &pssm) {
   if (!pssm.HasQuery())
     throw runtime_error("PSSM has no query");
 
@@ -808,7 +807,7 @@ CAlienG2::x_BuildQueryFromPssm(const CPssmWithParameters &pssm) {
 
 /// Extracts queries from report file and adds them to scope
 /// @param isProtein Are the queries protein sequences? [in]
-CRef<CBlastQueryVector> CAlienG2::x_ExtractQueries(bool isProtein) {
+CRef<CBlastQueryVector> CHorizonG::x_ExtractQueries(bool isProtein) {
   CRef<CBlast4_queries> b4_queries = rmtBlast->GetQueries();
   _ASSERT(b4_queries);
   const size_t kNumQueries = b4_queries->GetNumQueries();
@@ -855,7 +854,7 @@ CRef<CBlastQueryVector> CAlienG2::x_ExtractQueries(bool isProtein) {
 
 /// Modify BLAST options from defaults based upon command-line args or config.
 /// @param optsHandle already created CBlastOptionsHandle to modify [in]
-void CAlienG2::ProcessBlastOptions(CRef<CBlastOptionsHandle> optsHandle) {
+void CHorizonG::ProcessBlastOptions(CRef<CBlastOptionsHandle> optsHandle) {
   const CArgs &args = GetArgs();
 
   // Expect value is a supported option for all flavors of BLAST
@@ -891,7 +890,7 @@ void CAlienG2::ProcessBlastOptions(CRef<CBlastOptionsHandle> optsHandle) {
 /// in @group.
 /// @param taxId Taxon ID to query [in]
 /// @param group Taxon group to test against [in/out]
-bool CAlienG2::IsTaxonInGroup(int taxId, TGroup &group) {
+bool CHorizonG::IsTaxonInGroup(int taxId, TGroup &group) {
   if (taxId < 1 || group.empty()) // Invalid ID or no criteria
     return false;
   if (group.count(1) != 0)
@@ -914,7 +913,7 @@ bool CAlienG2::IsTaxonInGroup(int taxId, TGroup &group) {
 /// @param taxId1 First taxon ID to query [in]
 /// @param taxId2 Second taxon ID to query [in]
 /// @param highestRank Highest taxon ranking of ancestor [out] (optional)
-int CAlienG2::GetCommonAncestor(int taxId1, int taxId2, ETaxRank *highestRank) {
+int CHorizonG::GetCommonAncestor(int taxId1, int taxId2, ETaxRank *highestRank) {
   if (taxId1 == taxId2) {
     if (highestRank != nullptr)
       *highestRank = taxRank[taxId1];
@@ -925,6 +924,8 @@ int CAlienG2::GetCommonAncestor(int taxId1, int taxId2, ETaxRank *highestRank) {
       *highestRank = taxRank[1]; // eRank_No_Rank
     return 1;
   }
+
+  int depth[2] = {};
 
   // Many intermediary taxa are set to no rank (-1), so we need to track
   // highest rank at each step rather than simply check the final result's
@@ -943,6 +944,8 @@ int CAlienG2::GetCommonAncestor(int taxId1, int taxId2, ETaxRank *highestRank) {
         *highestRank = hRank;
       return taxId2;
     }
+    
+    ++depth[0];
   }
 
   // Test if taxon 2 is a child of taxon 1
@@ -956,27 +959,35 @@ int CAlienG2::GetCommonAncestor(int taxId1, int taxId2, ETaxRank *highestRank) {
         *highestRank = hRank;
       return taxId1;
     }
+    
+    ++depth[1];
   }
 
   // Search for nearest common taxon
+  if (depth[0] > depth[1]) {
+    for (int i = 0; i < depth[0] - depth[1] && taxId2 > 1; ++i)
+      taxId2 = parentTaxId[taxId2];
+  }
+  else if (depth[0] < depth[1]) {  
+    for (int i = 0; i < depth[1] - depth[0] && taxId1 > 1; ++i)
+      taxId1 = parentTaxId[taxId1];
+  }
+
   hRank = tRank;
-  for (int i = parentTaxId[taxId1]; i > 1; i = parentTaxId[i]) {
+  for (int i = taxId1, j = taxId2; i > 1 && j > 1;
+       i = parentTaxId[i], j = parentTaxId[j]) {
     if (highestRank != nullptr && hRank < taxRank[i])
       hRank = taxRank[i];
 
-    for (int j = parentTaxId[taxId2]; j > 1; j = parentTaxId[j]) {
-      if (i == j) {
-        if (highestRank != nullptr)
-          *highestRank = hRank;
-        return i;
-      }
-
-      if (taxRank[j] == eRank_Superkingdom)
-        break; // Don't care about "cellular organisms"/etc. taxa, stop here
+    if (i == j) {
+      if (highestRank != nullptr)
+        *highestRank = hRank;
+      return i;
     }
 
-    if (taxRank[i] == eRank_Superkingdom)
-      break;
+    if (taxRank[i] == eRank_Superkingdom ||
+        taxRank[j] == eRank_Superkingdom)
+      break; // Don't care about "cellular organisms"/etc. taxa, stop here
   }
 
   // Default: return root node
@@ -991,7 +1002,7 @@ int CAlienG2::GetCommonAncestor(int taxId1, int taxId2, ETaxRank *highestRank) {
 /// @param results Handle to BLAST search result set [in]
 /// @param scope BLAST scope [in]
 // ** TODO Add support for null group 2
-void CAlienG2::EvaluateResults(CRef<CSearchResultSet> results, CRef<CScope> scope) {
+void CHorizonG::EvaluateResults(CRef<CSearchResultSet> results, CRef<CScope> scope) {
   static int count = 0;
 
   for (auto &curResult: *results) {
@@ -1129,7 +1140,7 @@ void CAlienG2::EvaluateResults(CRef<CSearchResultSet> results, CRef<CScope> scop
 
 /// Write out HGT report file.
 /// @param out Output stream to write to
-void CAlienG2::CreateReport(CNcbiOstream &out) {
+void CHorizonG::CreateReport(CNcbiOstream &out) {
   // Print header
   out << "query_full_title"      << "\t"
       << "first_hit_full_title"  << "\t" << "second_hit_full_title"  << "\t"
@@ -1227,9 +1238,9 @@ void CAlienG2::CreateReport(CNcbiOstream &out) {
 //  Run
 
 
-int CAlienG2::Run() {
+int CHorizonG::Run() {
   SetDiagPostLevel(eDiag_Warning);
-  SetDiagPostPrefix("AlienG2");
+  SetDiagPostPrefix("HorizonG");
 
   // Get arguments/parameters
   const CArgs &args = GetArgs();
@@ -1412,7 +1423,7 @@ int CAlienG2::Run() {
 //  Cleanup
 
 
-void CAlienG2::Exit() {
+void CHorizonG::Exit() {
   // ...
 }
 
@@ -1424,6 +1435,6 @@ void CAlienG2::Exit() {
 #ifndef SKIP_DOXYGEN_PROCESSING
 int main(int argc, const char* argv[]) {
   // Execute main application function
-  return CAlienG2().AppMain(argc, argv);
+  return CHorizonG().AppMain(argc, argv);
 }
 #endif /* SKIP_DOXYGEN_PROCESSING */
