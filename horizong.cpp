@@ -1,11 +1,13 @@
-/*  
+/* 
+ * HorizonG
  * Author: Brad Dorney
  *
  * Based on NCBI BLAST+ code and API from the NCBI C++ Toolkit
  * http://www.ncbi.nlm.nih.gov/toolkit
  *
  * File Description:
- *   Application for running a BLAST search specialized for HGT analysis.
+ *   Application for analyzing BLAST search results for horizontal gene transfer
+ *   candidates.
  *
  */
 
