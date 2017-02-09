@@ -970,19 +970,23 @@ int CHorizonG::GetCommonAncestor(int taxId1, int taxId2, ETaxRank *highestRank) 
     taxId2 = parentTaxId[taxId2];
 
   hRank = tRank;
-  for (int i = taxId1, j = taxId2; i > 1 && j > 1;
-       i = parentTaxId[i], j = parentTaxId[j]) {
-    if (highestRank != nullptr && hRank < taxRank[i])
-      hRank = taxRank[i];
-
-    if (i == j) {
+  for (; taxId1 > 1 && taxId2 > 1;
+       taxId1 = parentTaxId[taxId1], taxId2 = parentTaxId[taxId2]) {
+    if (highestRank != nullptr) {
+      if (hRank < taxRank[taxId1])
+        hRank = taxRank[taxId1];
+      else if (hRank < taxRank[taxId2])
+        hRank = taxRank[taxId2];
+    }
+    
+    if (taxId1 == taxId2) {
       if (highestRank != nullptr)
         *highestRank = hRank;
-      return i;
+      return taxId1;
     }
 
-    if (taxRank[i] == eRank_Superkingdom ||
-        taxRank[j] == eRank_Superkingdom)
+    if (taxRank[taxId1] == eRank_Superkingdom ||
+        taxRank[taxId2] == eRank_Superkingdom)
       break; // Don't care about "cellular organisms"/etc. taxa, stop here
   }
 
