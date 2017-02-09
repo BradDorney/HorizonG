@@ -964,14 +964,10 @@ int CHorizonG::GetCommonAncestor(int taxId1, int taxId2, ETaxRank *highestRank) 
   }
 
   // Search for nearest common taxon
-  if (depth[0] > depth[1]) {
-    for (int i = 0; i < depth[0] - depth[1] && taxId2 > 1; ++i)
-      taxId2 = parentTaxId[taxId2];
-  }
-  else if (depth[0] < depth[1]) {  
-    for (int i = 0; i < depth[1] - depth[0] && taxId1 > 1; ++i)
-      taxId1 = parentTaxId[taxId1];
-  }
+  for (; depth[0] > depth[1] && taxId1 > 1; --depth[0])
+    taxId1 = parentTaxId[taxId1];
+  for (; depth[1] > depth[0] && taxId2 > 1; --depth[1])
+    taxId2 = parentTaxId[taxId2];
 
   hRank = tRank;
   for (int i = taxId1, j = taxId2; i > 1 && j > 1;
