@@ -1,6 +1,7 @@
 /*  
  * HorizonG
- * Author: Brad Dorney
+ * Copyright (c) 2017 Brad Dorney
+ * Licensed under BSD 3-Clause permissive license. See LICENSE for full details.
  *
  * Based on NCBI BLAST+ code and API from the NCBI C++ Toolkit
  * http://www.ncbi.nlm.nih.gov/toolkit
@@ -8,6 +9,7 @@
  * File Description:
  *   Application for analyzing BLAST search results for horizontal gene transfer
  *   candidates.
+ *
  */
 
 #include <ncbi_pch.hpp>
@@ -43,7 +45,6 @@
 #include <algorithm>
 #include <string>
 #include <cmath>
-#include <map>
 #include <unordered_map>
 #include <unordered_set>
 #include <list>
@@ -914,14 +915,16 @@ bool CHorizonG::IsTaxonInGroup(int taxId, TGroup &group) {
 /// @param taxId2 Second taxon ID to query [in]
 /// @param highestRank Highest taxon ranking of ancestor [out] (optional)
 int CHorizonG::GetCommonAncestor(int taxId1, int taxId2, ETaxRank *highestRank) {
+  ETaxRank dummy;
+  if (highestRank == nullptr)
+    highestRank = &dummy;
+
   if (taxId1 == taxId2) {
-    if (highestRank != nullptr)
-      *highestRank = taxRank[taxId1];
+    *highestRank = taxRank[taxId1];
     return taxId1;
   }
   if (taxId1 <= 1 || taxId2 <= 1) { // Invalid taxId
-    if (highestRank != nullptr)
-      *highestRank = taxRank[1]; // eRank_No_Rank
+    *highestRank = taxRank[1]; // eRank_No_Rank
     return 1;
   }
 
@@ -936,30 +939,26 @@ int CHorizonG::GetCommonAncestor(int taxId1, int taxId2, ETaxRank *highestRank) 
 
   // Test if taxon 1 is a child of taxon 2
   for (int i = parentTaxId[taxId1]; i > 1; i = parentTaxId[i]) {
-    if (highestRank != nullptr && hRank < taxRank[i])
-      hRank = taxRank[i];
+    hRank = taxRank[i];
 
     if (i == taxId2) {
-      if (highestRank != nullptr)
-        *highestRank = hRank;
+      *highestRank = hRank;
       return taxId2;
     }
-    
+
     ++depth[0];
   }
 
   // Test if taxon 2 is a child of taxon 1
   hRank = tRank;
   for (int i = parentTaxId[taxId2]; i > 1; i = parentTaxId[i]) {
-    if (highestRank != nullptr && hRank < taxRank[i])
-      hRank = taxRank[i];
+    hRank = taxRank[i];
 
     if (i == taxId1) {
-      if (highestRank != nullptr)
-        *highestRank = hRank;
+      *highestRank = hRank;
       return taxId1;
     }
-    
+
     ++depth[1];
   }
 
@@ -972,16 +971,13 @@ int CHorizonG::GetCommonAncestor(int taxId1, int taxId2, ETaxRank *highestRank) 
   hRank = tRank;
   for (; taxId1 > 1 && taxId2 > 1;
        taxId1 = parentTaxId[taxId1], taxId2 = parentTaxId[taxId2]) {
-    if (highestRank != nullptr) {
-      if (hRank < taxRank[taxId1])
-        hRank = taxRank[taxId1];
-      else if (hRank < taxRank[taxId2])
-        hRank = taxRank[taxId2];
-    }
-    
+    if (hRank < taxRank[taxId1])
+      hRank = taxRank[taxId1];
+    if (hRank < taxRank[taxId2])
+      hRank = taxRank[taxId2];
+
     if (taxId1 == taxId2) {
-      if (highestRank != nullptr)
-        *highestRank = hRank;
+      *highestRank = hRank;
       return taxId1;
     }
 
@@ -991,8 +987,7 @@ int CHorizonG::GetCommonAncestor(int taxId1, int taxId2, ETaxRank *highestRank) 
   }
 
   // Default: return root node
-  if (highestRank != nullptr)
-    *highestRank = taxRank[1]; // eRank_No_Rank
+  *highestRank = taxRank[1]; // eRank_No_Rank
   return 1;
 }
 
@@ -1017,9 +1012,9 @@ void CHorizonG::EvaluateResults(CRef<CSearchResultSet> results, CRef<CScope> sco
 
     CRef<CSeq_align> bestAlign[2];
     CBioseq_Handle bestBioseq[2];
-    double bestEValue[2]   = {0, 0},
-           bestBitscore[2] = {0, 0};
-    int bestTaxId[2]       = {0, 0};
+    double bestEValue[2]   = {},
+           bestBitscore[2] = {};
+    int bestTaxId[2]       = {};
 
     // Iterate through this query's hits
     // They are pre-sorted by e-value in ascending order
@@ -1066,7 +1061,7 @@ void CHorizonG::EvaluateResults(CRef<CSearchResultSet> results, CRef<CScope> sco
 
       // Test if subject's taxon is in HGT group 1 or 2
       bool inGroup1 = IsTaxonInGroup(taxId, group1Taxa),
-           inGroup2 = (!inGroup1 && IsTaxonInGroup(taxId, group2Taxa));
+           inGroup2 = !inGroup1 && IsTaxonInGroup(taxId, group2Taxa);
       if (!((inGroup1 && bestBitscore[0] == 0) ||
             (inGroup2 && bestBitscore[1] == 0)))
         continue;
@@ -1103,26 +1098,24 @@ void CHorizonG::EvaluateResults(CRef<CSearchResultSet> results, CRef<CScope> sco
     if (!(bestBitscore[0] && bestBitscore[1]))
       continue; // No hits in one or both HGT groups for this query
 
-    // Test against [group 1 score]:[group 2 score] ratio thresholds, if applicable
-    double scoreRatio = bestBitscore[0] / bestBitscore[1];
-    if ((scoreRatioMin && scoreRatio < scoreRatioMin) ||
-        (scoreRatioMax && scoreRatio > scoreRatioMax))
-      continue;
 
     // HGT index:   [best bitscore for 2nd group] - [best bitscore for 1st group]
     // Alien index: log10([best e-value for 2nd group + 1e-200] /
     //                    [best e-value for 1st group - 1e-200])
     double alienIndex = bestEValue[0] == 0 ?
                         0 : log10((bestEValue[1]) / (bestEValue[0])),
-           hgtIndex   = bestBitscore[1] - bestBitscore[0];
+           hgtIndex   = bestBitscore[1] - bestBitscore[0],
+           scoreRatio = bestBitscore[0] / bestBitscore[1];
 
-    // Test against alien index and HGT index thresholds, if applicable
+    // Test against alien index, HGT index, and score ratio thresholds, if applicable
     if ((alienIndexMin && alienIndex < alienIndexMin) ||
-        (alienIndexMax && alienIndex > alienIndexMax))
-      continue;
-
-    if ((hgtIndexMin && hgtIndex < hgtIndexMin) ||
-        (hgtIndexMax && hgtIndex > hgtIndexMax))
+        (alienIndexMax && alienIndex > alienIndexMax) ||
+        
+        (hgtIndexMin && hgtIndex < hgtIndexMin) ||
+        (hgtIndexMax && hgtIndex > hgtIndexMax) ||
+        
+        (scoreRatioMin && scoreRatio < scoreRatioMin) ||
+        (scoreRatioMax && scoreRatio > scoreRatioMax))
       continue;
 
     // Store the resultant HGT score, etc. for this query
