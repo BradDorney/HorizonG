@@ -1248,7 +1248,7 @@ int CHorizonG::Run() {
                         args["num_threads"].AsInteger();
 #else
   // No threads can be set in NON-MT mode
-  numBlastThreads = CThreadable::kMinNumThreads;
+  int numBlastThreads = CThreadable::kMinNumThreads;
 #endif
 
   bitscoreThreshold = args["bitscore"].AsDouble();
